@@ -1,29 +1,38 @@
 import 'package:meta/meta.dart';
 import 'package:specta_mobile/manager/UserAuthRepository/IUserAuthRepository.dart';
+import 'package:specta_mobile/service_locator.dart';
+import 'package:specta_mobile/services/api/api.dart';
+import 'package:specta_mobile/services/storage/secure_storage.dart';
 
 class UserAuthManager implements IUserAuthRepository {
+  var apiService = serviceLocator<Api>();
+  var storageService = serviceLocator<SecureStorage>();
   @override
   Future<void> deleteToken() async {
-    // TODO: implement deleteToken
-    return null;
+    return await storageService.deleteToken();
   }
 
   @override
   Future<void> hasToken() async {
-    // TODO: implement hasToken
-    return null;
+    var value = await storageService.hasToken();
+    if (value != null) {
+      return true;
+    } else {
+      return null;
+    }
   }
 
   @override
-  Future<String> login({@required String username, @required String password}) {
-    // TODO: implement login
-    return null;
+  Future<String> login({@required String username, @required String password}) async {
+    final String token = await apiService.authenticate(username, password, true);
+    print(token);
+    storageService.persistToken(token);
+    return token;
   }
 
   @override
   Future<void> persistToken(String token) {
-    // TODO: implement persistToken
-    return null;
+    return storageService.persistToken(token);
   }
   
 }

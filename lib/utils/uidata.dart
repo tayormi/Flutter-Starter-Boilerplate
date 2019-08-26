@@ -4,4 +4,5 @@ class UIData {
 
   // Global variables
   static const String tenantId = '1';
+  static const String tokenKey = 'accessToken';
 }
