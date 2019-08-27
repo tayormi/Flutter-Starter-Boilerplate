@@ -13,18 +13,20 @@ class UserAuthManager implements IUserAuthRepository {
   }
 
   @override
-  Future<void> hasToken() async {
+  Future<bool> hasToken() async {
     var value = await storageService.hasToken();
     if (value != null) {
       return true;
     } else {
-      return null;
+      return false;
     }
   }
 
   @override
-  Future<String> login({@required String username, @required String password}) async {
-    final String token = await apiService.authenticate(username, password, true);
+  Future<String> login(
+      {@required String username, @required String password}) async {
+    final String token =
+        await apiService.authenticate(username, password, true);
     print(token);
     storageService.persistToken(token);
     return token;
@@ -34,5 +36,4 @@ class UserAuthManager implements IUserAuthRepository {
   Future<void> persistToken(String token) {
     return storageService.persistToken(token);
   }
-  
 }
