@@ -9,7 +9,9 @@ import 'package:specta_mobile/services/storage/secure_storage.dart';
 // ambient variable to access the service locator
 GetIt serviceLocator = GetIt.instance;
 void setupLocator() {
-  serviceLocator.registerSingleton<IApi>(new Api());
-  serviceLocator.registerSingleton<IStorageService>(new SecureStorage());
-  serviceLocator.registerSingleton<IUserAuthRepository>(new UserAuthManager());
+  serviceLocator.registerLazySingleton(() => Api());
+  serviceLocator.registerLazySingleton(() => SecureStorage());
+  serviceLocator.registerLazySingleton(() => UserAuthManager());
+  // serviceLocator.registerSingleton<IStorageService>(new SecureStorage());
+  // serviceLocator.registerSingleton<IUserAuthRepository>(new UserAuthManager());
 }

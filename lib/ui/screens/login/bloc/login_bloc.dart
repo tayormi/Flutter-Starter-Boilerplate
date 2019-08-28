@@ -7,10 +7,10 @@ import 'package:specta_mobile/service_locator.dart';
 import './bloc.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
+  final UserAuthManager userAuthManager;
   final AuthenticationBloc authenticationBloc;
-  final userRepository = serviceLocator<UserAuthManager>();
 
-  LoginBloc({@required this.authenticationBloc}) : assert(authenticationBloc != null);
+  LoginBloc({@required this.authenticationBloc, @required this.userAuthManager}):  assert(userAuthManager != null), assert(authenticationBloc != null);
   @override
   LoginState get initialState => LoginInitial();
 
@@ -22,7 +22,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       yield LoginLoading();
 
       try {
-        final token = await userRepository.login(
+        final token = await userAuthManager.login(
           username: event.username,
           password: event.password,
         );
