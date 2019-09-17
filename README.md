@@ -1,2 +1,2 @@
-# specta_mobile
- A mobile app for specta
+# Flutter Starter Template for your projects
+ A starter template for your flutter projects
