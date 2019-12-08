@@ -10,7 +10,7 @@ import 'package:specta_mobile/services/storage/secure_storage.dart';
 GetIt serviceLocator = GetIt.instance;
 void setupLocator() {
   serviceLocator.registerLazySingleton(() => Api());
-  serviceLocator.registerLazySingleton(() => SecureStorage());
+ // serviceLocator.registerLazySingleton(() => SecureStorage());
   serviceLocator.registerLazySingleton(() => UserAuthManager());
   // serviceLocator.registerSingleton<IStorageService>(new SecureStorage());
   // serviceLocator.registerSingleton<IUserAuthRepository>(new UserAuthManager());

@@ -33,7 +33,7 @@ class UserAuthManager implements IUserAuthRepository {
   }
 
   @override
-  Future<void> persistToken(String token) {
+  persistToken(String token) {
     return storageService.persistToken(token);
   }
 }
