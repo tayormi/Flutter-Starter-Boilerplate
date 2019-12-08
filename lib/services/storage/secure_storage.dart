@@ -3,36 +3,45 @@ import 'package:specta_mobile/services/storage/IStorageService.dart';
 import 'package:specta_mobile/utils/uidata.dart';
 
 class SecureStorage implements IStorageService {
-  // Create storage
-  final _prefs = SharedPreferences.getInstance();
+  static SecureStorage _secureStorage;
+  static SharedPreferences _preferences;
   final key = UIData.tokenKey;
+
+  static Future<SecureStorage> getInstance() async {
+    if (_secureStorage == null) {
+      // keep local instance till it is fully initialized.
+      var secureStorage = SecureStorage._();
+      await secureStorage._init();
+      _secureStorage = secureStorage;
+    }
+    return _secureStorage;
+  }
+
+  SecureStorage._();
+  Future _init() async {
+    _preferences = await SharedPreferences.getInstance();
+  }
+
   @override
-  Future<void> deleteToken() async {
+  deleteToken() async {
     // Delete a token from secure storage
-    SharedPreferences storage = await _prefs;
-    return await storage.remove(key);
+    _preferences.remove(key);
   }
 
   @override
-  Future<String> hasToken() async {
+  hasToken() {
     // Check if there is a token in the secure storage
-    SharedPreferences storage = await _prefs;
-    String value = storage.getString(key);
-    return value;
+    return _preferences.getString(key) != null;
   }
 
   @override
-  Future<void> persistToken(String token) async {
-    // Write a token to secure storage
-    SharedPreferences storage = await _prefs;
-    return await storage.setString(key, token);
+  persistToken(String token) {
+    _preferences.setString(key, token);
   }
 
   @override
-  Future<String> getToken() async {
-    // Get the token in the secure storage
-    SharedPreferences storage = await _prefs;
-    String value = storage.getString(key);
-    return value;
+  getToken() {
+    // Get the token from the secure storage
+    return _preferences.getString(key);
   }
 }

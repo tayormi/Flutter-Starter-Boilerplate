@@ -1,7 +1,7 @@
 abstract class IStorageService {
-  Future<void> deleteToken();
-  Future<void> persistToken(String token);
-  Future<String> hasToken();
-  Future<String> getToken();
+  void deleteToken();
+  void persistToken(String token);
+  bool hasToken();
+  String getToken();
 
 }
